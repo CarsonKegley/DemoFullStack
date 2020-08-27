@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
-
 public interface LoginRepository extends JpaRepository<UserCredentials, Long> {
     UserCredentials findByUsername(String username);
 

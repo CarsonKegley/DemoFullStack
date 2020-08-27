@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-public class LoginController {
+public class UserController {
 
     @Autowired
     private LoginService loginService;
@@ -30,14 +30,18 @@ public class LoginController {
         return "Hey mister postman wait and see";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/yeet")
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
     public Boolean credentialValidation(@RequestBody UserCredentials loginCredentials) {
         loginService.updateLogins();
         return loginService.validateCredentials(loginCredentials);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/test")
-    public void test(@RequestBody String bat) {
-        System.out.println(bat);
+    @RequestMapping(method = RequestMethod.POST, value = "/signup")
+    public Boolean test(@RequestBody UserCredentials credentials) {
+        if(loginService.checkUsernameUniqueness(credentials)){
+            loginService.addUser(credentials);
+            return true;
+        }
+        return false;
     }
 }

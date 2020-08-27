@@ -15,9 +15,10 @@ public class LoginService {
     public List<UserCredentials> logins = new ArrayList<>(
             Arrays.asList(new UserCredentials("Tyler", "Kay"), new UserCredentials("Rachet", "Wappet")));
 
-    public void onRun(){
-        
+    public void onRun() {
+
     }
+
     public List<UserCredentials> getAllControllers() {
         return logins;
     }
@@ -35,13 +36,19 @@ public class LoginService {
         }
         return returnValue;
 
-        // for (UserCredentials loginController : logins) {
-        // if (loginController.getUsername().equals(loginCreds.getUsername())
-        // && loginController.getPassword().equals(loginCreds.getPassword())) {
-        // return true;
-        // }
-        // }
-        // return false;
+    }
+
+    public Boolean checkUsernameUniqueness(@RequestBody UserCredentials credentials){
+        boolean returnValue = false;
+        UserCredentials temp = loginRepository.findByUsername(credentials.getUsername());
+        if (temp == null){
+            returnValue = true;
+        }
+        return returnValue;
+    }
+
+    public void addUser(@RequestBody UserCredentials credentials){
+        loginRepository.save(credentials);
     }
 
 }
